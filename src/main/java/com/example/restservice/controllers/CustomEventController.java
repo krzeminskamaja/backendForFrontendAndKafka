@@ -11,16 +11,13 @@ import com.example.restservice.types.CustomEventBody;
 @RestController
 public class CustomEventController {
 
+	KafkaIntegration kafkaIntegration = new KafkaIntegration("127.0.0.1:9092");
+
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PostMapping("/newCustomEvent")
 	public void produceCustomEventToKafka(@RequestBody CustomEventBody customEventBody) {
-		String bootstrapServers = "127.0.0.1:9092";
-
-		String topic = "quickstart-events";
-
-        KafkaIntegration kafkaIntegration = new KafkaIntegration(bootstrapServers);
 		
-        kafkaIntegration.produceToTopic(topic, customEventBody);
+        kafkaIntegration.produceToTopic(customEventBody.topicName, customEventBody);
 		
 	}
 }

@@ -8,6 +8,7 @@ public class CustomEventBody implements Serializable{
     public String eventDescription;
     public String who;
     public String when;
+    public String topicName;
     
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();
