@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.restservice.repository.UserRepository;
+import com.example.restservice.types.Feedback;
 import com.example.restservice.types.User;
 import com.example.restservice.types.UserRequestBody;
 
@@ -35,6 +36,18 @@ public class UserController {
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+	}
+
+	@CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/users/new")
+	public ResponseEntity<User> createUser(@RequestBody UserRequestBody userBody) {
+		int howManyUsers = userRepository.findAll().size();
+        User user = new User();
+        user.setId(howManyUsers);
+        user.setName(userBody.name);
+        user.setPass(userBody.pass);
+		userRepository.save(user);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 }
